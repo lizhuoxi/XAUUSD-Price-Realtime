@@ -4,8 +4,8 @@
 import requests
 import re
 import json
-import time
-import threading
+from time import sleep
+# import threading
 from yunpian_python_sdk.model import constant as YC
 from yunpian_python_sdk.ypclient import YunpianClient
 
@@ -113,7 +113,7 @@ def main():
         # sendEmail(apiUser, apiKey, data, params, email)
         # sendSMS(smsApiKey, phone, data)
         time.sleep(30)
-        print "Sleep 5 sec!"
+        print "Sleep 30 sec!"
 
 if __name__ == '__main__':
     main()

@@ -4,6 +4,7 @@
 import requests
 from datetime import *
 from time import sleep
+import pyttsx3
 
 # history url
 history_url = 'https://kuaixun.cngold.org/getLastNews.html?versionType=new'
@@ -20,6 +21,19 @@ headers={'authority':'kuaixun.cngold.org',
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'zh-CN,zh;q=0.9',
          }
+# broadcast option,1:broadcast 0:don't broadcast
+broadcast = 1
+
+def Broadcast(news):
+    '''
+    broadcast the news
+    :param news:
+    :return:
+    '''
+    engine = pyttsx3.init()
+    engine.say(news)
+    engine.runAndWait()
+    
 
 def NewsFilter(raw_data,count):
     '''
@@ -42,6 +56,7 @@ def NewsFilter(raw_data,count):
         news_title = raw_data[i]['title']
         news = news_datetime + ' ' + news_title
         news_list.append(news)
+    news_list.reverse()
     ret = news_list,last_time
     del news_list
     return ret
@@ -62,6 +77,8 @@ def GetLatestNews(timestamp):
     '''
     res = requests.get(url=lastest_url + str(timestamp),headers=headers)
     if(res.json()['data']['count'] > 0):
+        if (broadcast == 1):
+            Broadcast('有新消息')
         return NewsFilter(res.json()['data']['data'],res.json()['data']['count'])
     else:
         return None,timestamp
@@ -73,15 +90,19 @@ def main():
     '''
     news_list,ts = GetHistoryNews()
     if not news_list is None:
-        news_list.reverse()
         for news in news_list:
             print(news)
+            if (broadcast == 1):
+                Broadcast(news)
     while True:
-        sleep(20)
         news_list,ts = GetLatestNews(ts)
         if not news_list is None:
             for news in news_list:
                 print(news)
+                if (broadcast == 1):
+                    Broadcast(news)
+            sleep(5)
+        sleep(15)
 
 if __name__ == '__main__':
     main()

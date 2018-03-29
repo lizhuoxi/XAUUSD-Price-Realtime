@@ -12,7 +12,8 @@
 
 # RMBGOLD_ICBC_PRICE
 - Allws us to watch the real RMB_GOLD from ICBC.
-- Price data come from [ICBC](http://m.icbc.com.cn/WapDynamicSite/TouchPage/GoldMarket/Default.aspx).
+- Precious Metals Price datas come from [Precious Metals Price](http://m.icbc.com.cn/WapDynamicSite/TouchPage/GoldMarket/Default.aspx).
+- Gold Price datas come from [Gold Price](http://m.icbc.com.cn/WapDynamicSite/TouchPage/GoldMarket/AccInfo.aspx?ID=901001).
 
 ---
 
@@ -29,3 +30,6 @@
 - Create `RMBGOLD_ICBC_PRICE.py` to get the real-time RMB GOLD price from ICBC website.
 - Have the middle price, purchase price and sell price.
 
+### 2018-3-29
+- Update `RMBGOLD_ICBC_PRICE.py` change `getGoldPrice()` into `getAllPrice`, which to catch all price about Precious Metals.
+- Create `RMBGOLD_ICBC_PRICE.py` func `getGoldPrice()` to catch all price about RMB GOLD.

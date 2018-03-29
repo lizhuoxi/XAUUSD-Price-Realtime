@@ -14,34 +14,63 @@ headers={'Connection': 'keep-alive',
         'Accept-Language': 'zh-CN,zh;q=0.9',
          }
 
-icbc_url = "http://m.icbc.com.cn/WapDynamicSite/Windroid/GoldMarket/AccResponse.aspx?datapara="
+icbc_all_url = "http://m.icbc.com.cn/WapDynamicSite/Windroid/GoldMarket/AccResponse.aspx?datapara="
+
+icbc_gold_price = "http://m.icbc.com.cn/WapDynamicSite/TouchPage/GoldMarket/AccInfo.aspx?ID=901001"
 
 re_rmb_gold = r"\d{3}\.\d{2}"
+
+def getAllPrice():
+    '''
+    get the real time price of rmb gold
+    :return: return middle_price, purchase_price, sell_price
+    '''
+    res = requests.get(url=icbc_all_url, headers=headers)
+    # get the middle price of rmb gold price
+    price_data = re.findall(re_rmb_gold, res.text)
+    middle_rmb_gold_price = float(price_data[0])
+    purchase_price = middle_rmb_gold_price + 0.20
+    sell_price = middle_rmb_gold_price - 0.20
+    return middle_rmb_gold_price, purchase_price, sell_price
 
 def getGoldPrice():
     '''
     get the real time price of rmb gold
+    :return: return purchase_price, sell_price, high_price, low_price, middle_price
+    '''
+    res = requests.get(url=icbc_gold_price, headers=headers)
+    # get all price about rmb gold
+    price_data = re.findall(re_rmb_gold, res.text)
+    return price_data
+
+def printAllPrice():
+    '''
+    print all gold prices
+    :return: none
+    '''
+    while True:
+        middle_price, purchase_price, sell_price = getAllPrice()
+        print "Time: " + asctime()
+        print "MiddlePrice: %s PurchasePrice: %s SellPrice: %s" % (middle_price, purchase_price, sell_price)
+        sleep(3)
+
+def printGoldPrice():
+    '''
+    print rmb gold price
     :return:
     '''
-    res = requests.get(url=icbc_url, headers=headers)
-    # get the middle price of rmb gold price
-    price_data = re.findall(re_rmb_gold, res.text)
-    rmb_gold_price = price_data[0]
-    return rmb_gold_price
+    while True:
+        purchase_price, sell_price, high_price, low_price, middle_price = getGoldPrice()
+        print "Time: " + asctime()
+        print "PurchasePrice: %s SellPrice: %s HighPrice: %s LowPrice: %s MiddlePrice: %s " % (purchase_price, sell_price, high_price, low_price, middle_price)
+        sleep(3)
 
 def main():
     '''
     main func
     :return:
     '''
-    getGoldPrice()
-    while True:
-        middle_price = float(getGoldPrice())
-        purchase_price = middle_price + 0.20
-        sell_price = middle_price - 0.20
-        print "Time: " + asctime()
-        print "MiddlePrice: %.2f PurchasePrice: %.2f SellPrice: %.2f" % (middle_price, purchase_price, sell_price)
-        sleep(3)
+    printGoldPrice()
 
 if __name__ == '__main__':
     main()

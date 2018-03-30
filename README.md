@@ -1,21 +1,25 @@
 # XAUUSD-Price-Realtime
-- Allows us to watch the price of XAUUSD in real time.
+- Allow us to watch the price of XAUUSD in real time.
 - Datas come from [金投网](https://www.cngold.org/).
 
 ---
 
 # News
-- Allws us to watch the real finacail news all over the world.
+- Allow us to watch the real finacail news all over the world.
 - News comes from [金投网](https://www.cngold.org/).
 
 ---
 
 # RMBGOLD_ICBC_PRICE
-- Allws us to watch the real RMB_GOLD from ICBC.
+- Allow us to watch the real RMB_GOLD from ICBC.
 - Precious Metals Price datas come from [Precious Metals Price](http://m.icbc.com.cn/WapDynamicSite/TouchPage/GoldMarket/Default.aspx).
 - Gold Price datas come from [Gold Price](http://m.icbc.com.cn/WapDynamicSite/TouchPage/GoldMarket/AccInfo.aspx?ID=901001).
 
 ---
+
+# FUND_PRICE
+- Allow us to watch the price of fund, whose code is decided by us.
+- Fund Price datas come from [1234567.com](http://fundgz.1234567.com.cn/js/)
 
 # Logs
 ### 2018-3-20
@@ -33,3 +37,6 @@
 ### 2018-3-29
 - Update `RMBGOLD_ICBC_PRICE.py` change `getGoldPrice()` into `getAllPrice`, which to catch all price about Precious Metals.
 - Create `RMBGOLD_ICBC_PRICE.py` func `getGoldPrice()` to catch all price about RMB GOLD.
+
+### 2018-3-30
+- Create `FUND_PRICE.py` to catch the price of the fund by fundcode.
